@@ -42,7 +42,7 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overscroll-behavior: none; }
 
     body {
       background: var(--bg-deep);
@@ -51,6 +51,9 @@
       font-weight: 300;
       line-height: 1.7;
       overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     /* ── Noise overlay ── */
@@ -394,7 +397,7 @@
       text-align: center;
       padding: 4rem 2rem 3rem;
       border-top: 1px solid rgba(201, 168, 76, 0.08);
-      margin-top: 4rem;
+      margin-top: auto;
     }
 
     .footer-note {
