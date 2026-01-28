@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Andrew's Memoirs — My Living Soundtrack</title>
+  <meta name="description" content="The memoirs of Andrew — a life told through jazz, music, and memory.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #0d0b08;
+      --bg-warm: #1a1510;
+      --bg-card: #211c14;
+      --gold: #c9a84c;
+      --gold-bright: #e8c95a;
+      --gold-dim: #8a7234;
+      --cream: #f0e6d0;
+      --cream-mid: #bfb49a;
+      --cream-dim: #7a7060;
+      --rust: #a0522d;
+      --smoke: rgba(240, 230, 208, 0.06);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--cream);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    /* Vinyl grooves background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 140vmax;
+      height: 140vmax;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: repeating-radial-gradient(
+        circle at center,
+        transparent 0px,
+        transparent 3px,
+        rgba(201, 168, 76, 0.02) 3px,
+        rgba(201, 168, 76, 0.02) 4px
+      );
+      animation: spin 120s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Gold spotlight */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60vw;
+      height: 70vh;
+      background: radial-gradient(ellipse at center, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    .hero-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.3s ease forwards;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 8vw, 6.5rem);
+      line-height: 1.05;
+      color: var(--cream);
+      margin-bottom: 0.3em;
+      opacity: 0;
+      animation: fadeUp 1s 0.5s ease forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+      display: block;
+      font-size: 0.55em;
+      font-weight: 400;
+      margin-top: 0.2em;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-divider {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 2rem auto;
+      opacity: 0;
+      animation: fadeUp 1s 0.7s ease forwards;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--cream-mid);
+      max-width: 520px;
+      margin: 0 auto;
+      font-style: italic;
+      opacity: 0;
+      animation: fadeUp 1s 0.9s ease forwards;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gold-dim);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 1s 1.3s ease forwards;
+    }
+
+    .scroll-hint span {
+      display: block;
+      width: 1px;
+      height: 32px;
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* ── Section: About ── */
+    .section {
+      position: relative;
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 2rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--gold-dim);
+      margin-right: 12px;
+      vertical-align: middle;
+    }
+
+    .about-text {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--cream-mid);
+      max-width: 680px;
+      line-height: 1.8;
+    }
+
+    .about-text strong {
+      color: var(--cream);
+      font-weight: 400;
+    }
+
+    /* ── Cards ── */
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+
+    .book-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid rgba(201, 168, 76, 0.1);
+      border-radius: 2px;
+      padding: 2.5rem;
+      transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+      overflow: hidden;
+    }
+
+    .book-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .book-card:hover {
+      border-color: rgba(201, 168, 76, 0.25);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .book-card:hover::before { opacity: 1; }
+
+    .book-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 4.5rem;
+      font-weight: 900;
+      color: rgba(201, 168, 76, 0.07);
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      line-height: 1;
+    }
+
+    .book-category {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .book-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.25;
+      margin-bottom: 1rem;
+    }
+
+    .book-desc {
+      color: var(--cream-dim);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .book-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.8rem;
+      color: var(--cream-dim);
+    }
+
+    .book-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .book-meta svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--gold-dim);
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 2rem;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .download-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-101%);
+      transition: transform 0.35s ease;
+      z-index: 0;
+    }
+
+    .download-btn:hover::before { transform: translateX(0); }
+
+    .download-btn:hover { color: var(--bg-deep); }
+
+    .download-btn span,
+    .download-btn svg {
+      position: relative;
+      z-index: 1;
+    }
+
+    .download-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      transition: transform 0.3s ease;
+    }
+
+    .download-btn:hover svg { transform: translateY(2px); }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      border-top: 1px solid rgba(201, 168, 76, 0.08);
+      margin-top: 4rem;
+    }
+
+    .footer-note {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--cream-dim);
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-sub {
+      font-size: 0.75rem;
+      color: rgba(240, 230, 208, 0.25);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Musical notes floating decoration ── */
+    .note-float {
+      position: fixed;
+      font-size: 1.2rem;
+      color: rgba(201, 168, 76, 0.04);
+      pointer-events: none;
+      z-index: 0;
+      animation: floatNote 20s linear infinite;
+    }
+
+    @keyframes floatNote {
+      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .section { padding: 4rem 1.5rem; }
+      .book-card { padding: 2rem 1.5rem; }
+      .book-number { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating musical notes -->
+  <div aria-hidden="true" id="notes-container"></div>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-label">The Memoirs of Andrew</p>
+      <h1 class="hero-title">
+        My Living<br>Soundtrack
+        <em>Past, Present &amp; Perpetual</em>
+      </h1>
+      <div class="hero-divider"></div>
+      <p class="hero-subtitle">
+        A life told through jazz — the records, the stages, the late&#8209;night sessions, and every note in between.
+      </p>
+    </div>
+    <div class="scroll-hint">
+      Explore
+      <span></span>
+    </div>
+  </section>
+
+  <!-- ── About ── -->
+  <section class="section reveal">
+    <p class="section-label">About These Works</p>
+    <p class="about-text">
+      Andrew is an <strong>avid jazz musician</strong> whose life has unfolded like a long,
+      winding improvisation. In his own words, these memoirs capture that journey — from the first records
+      that lit the spark, through decades of playing, listening, and living with music
+      as both companion and compass.
+    </p>
+  </section>
+
+  <!-- ── Books ── -->
+  <section class="section">
+    <p class="section-label reveal">Available Downloads</p>
+    <div class="books-grid">
+
+      <!-- Card 1: Living Soundtrack -->
+      <div class="book-card reveal">
+        <span class="book-number">01</span>
+        <p class="book-category">Memoir</p>
+        <h2 class="book-title">My Living Soundtrack<br><span style="font-weight: 400; font-size: 0.65em; color: var(--cream-mid);">Past, Present &amp; Perpetual</span></h2>
+        <p class="book-desc">
+          The full memoir — Andrew's life story told through the lens of the music
+          he loves, plays, and lives by. Jazz is more than a genre; it's the
+          soundtrack to every chapter.
+        </p>
+        <div class="book-meta">
+          <span>
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            PDF
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            34 MB
+          </span>
+        </div>
+        <a href="files/Printable_My Living Soundtrack_Book Layout A4 - 06.03.23.pdf" download class="download-btn">
+          <span>Download E-Book</span>
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </a>
+      </div>
+
+      <!-- Card 2: History of Jazz -->
+      <div class="book-card reveal">
+        <span class="book-number">02</span>
+        <p class="book-category">Reference</p>
+        <h2 class="book-title">A Chronological History of Jazz</h2>
+        <p class="book-desc">
+          Andrew's carefully compiled chronological journey through the history of jazz —
+          from its roots to its many evolutions, annotated with personal insight
+          and a lifetime of listening and playing.
+        </p>
+        <div class="book-meta">
+          <span>
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            PDF
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            7.3 MB
+          </span>
+        </div>
+        <a href="files/Chronological Compilation to a History of Jazz - Simon Edit.pdf" download class="download-btn">
+          <span>Download E-Book</span>
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <p class="footer-note">"Music is the soundtrack of your life."</p>
+    <p class="footer-sub">The memoirs of Andrew, in his own words</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Floating music notes
+    const notes = ['♪', '♫', '♩', '♬'];
+    const container = document.getElementById('notes-container');
+    function spawnNote() {
+      const el = document.createElement('span');
+      el.className = 'note-float';
+      el.textContent = notes[Math.floor(Math.random() * notes.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDuration = (15 + Math.random() * 20) + 's';
+      el.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+      container.appendChild(el);
+      el.addEventListener('animationend', () => el.remove());
+    }
+    setInterval(spawnNote, 4000);
+    for (let i = 0; i < 3; i++) setTimeout(spawnNote, i * 1500);
+  </script>
+</body>
+</html>
