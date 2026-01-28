@@ -616,17 +616,19 @@
     // Floating music notes
     const notes = ['♪', '♫', '♩', '♬'];
     const container = document.getElementById('notes-container');
+    const MAX_NOTES = 50;
     function spawnNote() {
+      if (container.children.length >= MAX_NOTES) return;
       const el = document.createElement('span');
       el.className = 'note-float';
       el.textContent = notes[Math.floor(Math.random() * notes.length)];
       el.style.left = Math.random() * 100 + 'vw';
-      el.style.animationDuration = (15 + Math.random() * 20) + 's';
+      el.style.animationDuration = (12 + Math.random() * 8) + 's';
       el.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
       container.appendChild(el);
       el.addEventListener('animationend', () => el.remove());
     }
-    setInterval(spawnNote, 4000);
+    setInterval(spawnNote, 2000);
     for (let i = 0; i < 3; i++) setTimeout(spawnNote, i * 1500);
   </script>
 </body>
